@@ -9,7 +9,7 @@ pipeline{
                 sh "docker build -t ibrahimaamer/ibrahim:V${env.BUILD_NUMBER} ."
                 withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'pass', usernameVariable: 'user')]) {
                  sh "docker login -u $user -p $pass"
-                 sh "docker push ibrahimaamer/test:V${env.BUILD_NUMBER}"
+                 sh "docker push ibrahimaamer/ibrahim:V${env.BUILD_NUMBER}"
 }              
             }
         }
