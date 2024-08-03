@@ -15,7 +15,7 @@ pipeline{
         }
         stage('deploy'){
             steps{
-                sh "docker run -d -p 500${env.BUILD_NUMBER}:8080 maro4299311/marwan:V${env.BUILD_NUMBER}"
+                sh "docker run -d -p 500${env.BUILD_NUMBER}:8080 ibrahimaamer/ibrahim:V${env.BUILD_NUMBER}"
             }
         }
     }
