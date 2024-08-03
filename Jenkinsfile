@@ -6,7 +6,7 @@ pipeline{
     stages{
         stage('build'){
             steps{
-                sh "docker build -t maro4299311/marwan:V${env.BUILD_NUMBER} ."
+                sh "docker build -t IbrahimAamer1/ibrahim:V${env.BUILD_NUMBER} ."
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'pass', usernameVariable: 'user')]) {
                  sh "docker login -u $user -p $pass"
                  sh "docker push ibrahimaamer/test:V${env.BUILD_NUMBER}"
