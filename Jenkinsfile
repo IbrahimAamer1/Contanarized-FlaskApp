@@ -14,7 +14,7 @@ pipeline {
                     sh "docker build -t ibrahimaamer/flask-app-pipeline:${BUILD_NUMBER} ."
                     
                     // Log in to Docker Hub
-                    withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                    withCredentials([usernamePassword(credentialsId: 'docker-hub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                         sh "docker login -u $DOCKER_USER -p $DOCKER_PASS"
                     }
                     
