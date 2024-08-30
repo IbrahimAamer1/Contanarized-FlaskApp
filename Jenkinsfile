@@ -29,7 +29,7 @@ pipeline {
                 script {
                     echo "Deploying on Kubernetes..."
                     // Apply the Kubernetes manifest
-                    sh "kubectl apply -f ${WORKSPACE}/flask-pod.yml"
+                    sh "kubectl apply -f flask-pod.yml"
                 }
             }
         }
