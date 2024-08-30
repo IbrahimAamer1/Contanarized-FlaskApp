@@ -1,21 +1,36 @@
-pipeline{
-    agent{
-        label 'agent1'
-        //dasjkdasndas
-    }
-    stages{
-        stage('build'){
-            steps{
-                sh "docker build -t ibrahimaamer/ibrahim:V${env.BUILD_NUMBER} ."
-                withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'pass', usernameVariable: 'user')]) {
-                 sh "docker login -u $user -p $pass"
-                 sh "docker push ibrahimaamer/ibrahim:V${env.BUILD_NUMBER}"
-}              
+pipeline {
+    agent any
+    stages {
+        stage('Setup') {
+            steps {
+                git branch: 'main', credentialsId: 'Github', url: 'https://github.com/IbrahimAamer1/flask_dockerApp.git'
             }
         }
-        stage('deploy'){
-            steps{
-                sh "docker run -d -p 500${env.BUILD_NUMBER}:8080 ibrahimaamer/ibrahim:V${env.BUILD_NUMBER}"
+        
+        stage('Build') {
+            steps {
+                script {
+                    // Build the Docker image
+                    sh "docker build -t IbrahimAamer1/flask-app-pipeline:${BUILD_NUMBER} ."
+                    
+                    // Log in to Docker Hub
+                    withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                        sh "docker login -u $DOCKER_USER -p $DOCKER_PASS"
+                    }
+                    
+                    // Push the Docker image to Docker Hub
+                    sh "docker push IbrahimAamer1/flask-app-pipeline:${BUILD_NUMBER}"
+                }
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                script {
+                    echo "Deploying on Kubernetes..."
+                    // Apply the Kubernetes manifest
+                    sh "kubectl apply -f ${WORKSPACE}/flask-pod.yml"
+                }
             }
         }
     }
