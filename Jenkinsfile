@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Build the Docker image
-                    sh "docker build -t IbrahimAamer1/flask-app-pipeline:${BUILD_NUMBER} ."
+                    sh "docker build -t ibrahimaamer/flask-app-pipeline:${BUILD_NUMBER} ."
                     
                     // Log in to Docker Hub
                     withCredentials([usernamePassword(credentialsId: 'DockerHub', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
@@ -19,7 +19,7 @@ pipeline {
                     }
                     
                     // Push the Docker image to Docker Hub
-                    sh "docker push IbrahimAamer1/flask-app-pipeline:${BUILD_NUMBER}"
+                    sh "docker push ibrahimaamer/flask-app-pipeline:${BUILD_NUMBER}"
                 }
             }
         }
